@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Calendario from './CalendarioComponent';
 import { EXCURSIONES } from '../comun/excursiones';
+
 class CampoBase extends Component {
  constructor(props) {
  super(props);
