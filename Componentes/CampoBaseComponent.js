@@ -5,6 +5,8 @@ import DetalleExcursion from './DetalleExcursionComponent';
 import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import Home from './HomeComponent';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,7 +51,7 @@ function DrawerNavegador() {
   },
   }}
    >
-   <Drawer.Screen name="Home" component={HomeNavegador} />
+   <Drawer.Screen name="Home" component={Home} />
    <Drawer.Screen name="Calendario" component={CalendarioNavegador} />
    </Drawer.Navigator>
    );
