@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 function CalendarioNavegador() {
   return (
@@ -37,14 +38,31 @@ function CalendarioNavegador() {
   );
 }
 
+function DrawerNavegador() {
+   return (
+   <Drawer.Navigator
+  initialRouteName=" Drawer"
+  screenOptions={{
+  headerShown: false,
+  drawerStyle: {
+  backgroundColor: '#c2d3da',
+  },
+  }}
+   >
+   <Drawer.Screen name="Home" component={HomeNavegador} />
+   <Drawer.Screen name="Calendario" component={CalendarioNavegador} />
+   </Drawer.Navigator>
+   );
+}
+
 class Campobase extends Component {
   render() {
      return (
       <NavigationContainer>
         <View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
-          <CalendarioNavegador />
+          <DrawerNavegador />
         </View>
-      </NavigationContainer>      
+      </NavigationContainer>
   );
   }
 }
