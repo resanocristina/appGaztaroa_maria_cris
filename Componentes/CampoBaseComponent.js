@@ -84,10 +84,10 @@ class Campobase extends Component {
   render() {
     return (
       <NavigationContainer>
-        <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
-          <DrawerNavegador />
-        </View>
-      </NavigationContainer>
+    <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
+      <DrawerNavegador />
+    </View>
+      </NavigationContainer >
     );
   }
 }
