@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { Card } from '@rneui/themed';
 import { EXCURSIONES } from '../comun/excursiones';
 import { ScrollView, FlatList} from 'react-native';
+import { Card } from '@rneui/themed';
 import { COMENTARIOS } from '../comun/comentarios';
 import { Icon } from '@rneui/themed';
 
