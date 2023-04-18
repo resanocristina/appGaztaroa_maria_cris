@@ -5,6 +5,7 @@ import { ScrollView, FlatList} from 'react-native';
 import { Card } from '@rneui/themed';
 import { COMENTARIOS } from '../comun/comentarios';
 import { Icon } from '@rneui/themed';
+import { baseUrl } from '../comun/comun';
 
 function RenderExcursion(props) {
 
@@ -100,7 +101,7 @@ class DetalleExcursion extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        color: 'chocolate',
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 30,
         alignItems: 'center',

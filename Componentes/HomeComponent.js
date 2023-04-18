@@ -4,6 +4,7 @@ import { Card } from '@rneui/themed';
 import { EXCURSIONES } from '../comun/excursiones';
 import { CABECERAS } from '../comun/cabeceras';
 import { ACTIVIDADES } from '../comun/actividades';
+import { baseUrl } from '../comun/comun';
 
 function RenderItem(props) {
 
@@ -14,7 +15,7 @@ function RenderItem(props) {
 
             <Card>
                 <Card.Divider />
-                <Card.Image source={require('./imagenes/40Años.png')}>
+                <Card.Image source={{uri: baseUrl + item.imagen}}>
                     <Card.Title style={styles.title}>{item.nombre}</Card.Title>
                 </Card.Image>
                 <Text style={{ margin: 20 }}>
@@ -54,7 +55,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        color: 'chocolate',
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 30,
         alignItems: 'center',
