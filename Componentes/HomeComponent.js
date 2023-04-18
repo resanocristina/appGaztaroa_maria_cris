@@ -55,7 +55,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        color: 'white',
+        color: 'chocolate',
         fontWeight: 'bold',
         fontSize: 30,
         alignItems: 'center',
