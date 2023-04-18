@@ -15,7 +15,7 @@ function RenderExcursion(props) {
         return (   
             <Card>
                 <Card.Divider />
-                <Card.Image source={require('./imagenes/40Años.png')}>
+                <Card.Image source={{uri: baseUrl + excursion.imagen}}>
                     <Card.Title style={styles.title}>{excursion.nombre}</Card.Title>
                 </Card.Image>
                 <Text style={{ margin: 20 }}>
