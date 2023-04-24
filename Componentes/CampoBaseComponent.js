@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 import Calendario from './CalendarioComponent';
 import DetalleExcursion from './DetalleExcursionComponent';
 import { View, StyleSheet, Image, Text } from 'react-native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { Icon } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
@@ -11,7 +11,25 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './HomeComponent';
 import Contacto from './ContactoComponent';
 import QuienesSomos from './QuienesSomosComponent';
-import { colorGaztaroaClaro, colorGaztaroaOscuro  } from '../comun/comun';
+import { colorGaztaroaClaro, colorGaztaroaOscuro } from '../comun/comun';
+import { connect } from 'react-redux';
+import { fetchExcursiones, fetchComentarios, fetchCabeceras, fetchActividades } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+  return {
+    excursiones: state.excursiones,
+    comentarios: state.comentarios,
+    cabeceras: state.cabeceras,
+    actividades: state.actividades
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchExcursiones: () => dispatch(fetchExcursiones()),
+  fetchComentarios: () => dispatch(fetchComentarios()),
+  fetchCabeceras: () => dispatch(fetchCabeceras()),
+  fetchActividades: () => dispatch(fetchActividades()),
+})
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -21,22 +39,21 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
         <View style={styles.drawerHeader}>
-          <View style={{flex:1}}>
+          <View style={{ flex: 1 }}>
             <Image source={require('./imagenes/logo.png')} style={styles.drawerImage} />
           </View>
-        <View style={{flex: 2}}>
-      <Text style={styles.drawerHeaderText}> Gaztaroa</Text>
+          <View style={{ flex: 2 }}>
+            <Text style={styles.drawerHeaderText}> Gaztaroa</Text>
+          </View>
         </View>
-        </View>
-      <DrawerItemList {...props} />
+        <DrawerItemList {...props} />
       </SafeAreaView>
     </DrawerContentScrollView>
- );
+  );
 }
 
-
 function CalendarioNavegador() {
-  
+
   return (
     <Stack.Navigator
       initialRouteName="Calendar"
@@ -118,7 +135,7 @@ function QuienesSomosNavegador() {
         headerTintColor: '#fff',
         headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
-        headerLeft: () => (<Icon name="menu" size={28} color= 'white' onPress={ () => navigation.dispatch(DrawerActions.toggleDrawer()) }/>)
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />)
       }}
     >
       <Stack.Screen
@@ -145,53 +162,53 @@ function DrawerNavegador() {
         },
       }}
     >
-      <Drawer.Screen name="Campo base" component={HomeNavegador} 
+      <Drawer.Screen name="Campo base" component={HomeNavegador}
         options={{
-          drawerIcon: ({ tintColor}) => (
-          <Icon
-          name='home'
-          type='font-awesome'
-          size={24}
-          color={tintColor}
-          />
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='home'
+              type='font-awesome'
+              size={24}
+              color={tintColor}
+            />
           )
         }}
       />
-      <Drawer.Screen name="Quiénes somos" component={QuienesSomosNavegador} 
+      <Drawer.Screen name="Quiénes somos" component={QuienesSomosNavegador}
         options={{
-          drawerIcon: ({tintColor}) => (
-          <Icon
-          name='info-circle'
-          type='font-awesome'
-          size={24}
-          color={tintColor}
-          />
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='info-circle'
+              type='font-awesome'
+              size={24}
+              color={tintColor}
+            />
           )
         }}
       />
-      <Drawer.Screen name="Calendario" component={CalendarioNavegador} 
-       options={{
-        drawerIcon: ({tintColor}) => (
-        <Icon
-        name='calendar'
-        type='font-awesome'
-        size={24}
-        color={tintColor}
-        />
-        )
-       }}
+      <Drawer.Screen name="Calendario" component={CalendarioNavegador}
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='calendar'
+              type='font-awesome'
+              size={24}
+              color={tintColor}
+            />
+          )
+        }}
       />
-      <Drawer.Screen name="Contacto" component={ContactoNavegador} 
-      options={{
-        drawerIcon: ({tintColor}) => (
-        <Icon
-        name='address-card'
-        type='font-awesome'
-        size={24}
-        color={tintColor}
-        />
-        )
-       }}
+      <Drawer.Screen name="Contacto" component={ContactoNavegador}
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='address-card'
+              type='font-awesome'
+              size={24}
+              color={tintColor}
+            />
+          )
+        }}
       />
     </Drawer.Navigator>
   );
@@ -199,12 +216,19 @@ function DrawerNavegador() {
 
 
 class Campobase extends Component {
+  componentDidMount() {
+    this.props.fetchExcursiones();
+    this.props.fetchComentarios();
+    this.props.fetchCabeceras();
+    this.props.fetchActividades();
+  }
+
   render() {
     return (
       <NavigationContainer>
-    <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
-      <DrawerNavegador />
-    </View>
+        <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
+          <DrawerNavegador />
+        </View>
       </NavigationContainer >
     );
   }
@@ -212,29 +236,26 @@ class Campobase extends Component {
 
 const styles = StyleSheet.create({
   container: {
-  flex: 1,
+    flex: 1,
   },
   drawerHeader: {
-  backgroundColor: colorGaztaroaOscuro,
-  height: 100,
-  alignItems: 'center',
-  justifyContent: 'center',
-  flex: 1,
-  flexDirection: 'row'
+    backgroundColor: colorGaztaroaOscuro,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    flexDirection: 'row'
   },
   drawerHeaderText: {
-  color: 'white',
-  fontSize: 24,
-  fontWeight: 'bold'
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold'
   },
   drawerImage: {
-  margin: 10,
-  width: 80,
-  height: 60
+    margin: 10,
+    width: 80,
+    height: 60
   }
- });
- 
- 
+});
 
-
-export default Campobase;
+export default connect(mapStateToProps, mapDispatchToProps)(Campobase);

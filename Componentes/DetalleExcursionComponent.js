@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { EXCURSIONES } from '../comun/excursiones';
-import { ScrollView, FlatList} from 'react-native';
+import { ScrollView, SafeAreaView} from 'react-native';
 import { Card } from '@rneui/themed';
 import { COMENTARIOS } from '../comun/comentarios';
 import { Icon } from '@rneui/themed';
@@ -10,23 +10,24 @@ import { baseUrl } from '../comun/comun';
 function RenderExcursion(props) {
 
     const excursion = props.excursion;
-    const comentarios = props.comentarios;
 
     if (excursion != null) {
-        return (   
+        return (
             <Card>
                 <Card.Divider />
-                <Card.Image source={{uri: baseUrl + excursion.imagen}}>
+                <Card.Image source={{ uri: baseUrl + excursion.imagen }}>
                     <Card.Title style={styles.title}>{excursion.nombre}</Card.Title>
                 </Card.Image>
                 <Text style={{ margin: 20 }}>
                     {excursion.descripcion}
                 </Text>
-                <Icon>
-                    name={ props.favorita ? 'heart' : 'heart-o'}
+                <Icon
+                    raised
+                    reverse
+                    name={props.favorita ? 'heart' : 'heart-o'}
                     type='font-awesome'
                     color='#f50'
-                    onPress={() => props.favorita ? console.log('La excursión ya se encuentra entre las favoritas') : props.onPress()}
+                    onPress={() => props.favorita ? console.log('La excursión ya se encuentra entre las favoritas') : props.onPress()}>
                 </Icon>
             </Card>
         );
@@ -34,32 +35,28 @@ function RenderExcursion(props) {
     else {
         return (<View></View>);
     }
-     
+
 }
 
 function RenderComentario(props) {
-    const comentarios = props.comentarios;
-    const renderCommentarioItem = ({ item, index }) => {
 
-        return (
-            <View key={index} style={{ margin: 10 }}>
-                <Text style={{ fontSize: 16 ,fontWeight: 'bold'}}>{item.comentario}</Text>
-                <Text style={{ fontSize: 14 }}>{item.autor} </Text>
-                <Text style={{ fontSize: 12 }}>{item.dia} </Text>
-                <Text style={{ fontSize: 12 }}>Valoración: {item.valoracion}/10</Text>
-            </View>
-        );
-    };
-    
+    const comentarios = props.comentarios;
+
+
     return (
         <Card>
             <Card.Title>Comentarios</Card.Title>
-            <Card.Divider/>
-            <FlatList
-                data={comentarios}
-                renderItem={renderCommentarioItem}
-                keyExtractor={item => item.id.toString()}
-            /> 
+            <Card.Divider />
+            <SafeAreaView style={{ flex: 1 }}>
+                {comentarios.map((item, index) => (
+                    <View key={index} style={{ margin: 10 }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.comentario}</Text>
+                        <Text style={{ fontSize: 14 }}>{item.autor} </Text>
+                        <Text style={{ fontSize: 12 }}>{item.dia} </Text>
+                        <Text style={{ fontSize: 12 }}>Valoración: {item.valoracion}/10</Text>
+                    </View>
+                ))}
+            </SafeAreaView>
         </Card>
     );
 }
@@ -72,27 +69,29 @@ class DetalleExcursion extends Component {
             comentarios: COMENTARIOS,
             favoritos: []
         };
-           
+
     }
 
     marcarFavorito(excursionId) {
-        this.setState({favoritos: this.state.favoritos.concat(excursionId
-       )});
+        this.setState({
+            favoritos: this.state.favoritos.concat(excursionId
+            )
+        });
     }
 
     render() {
         const { excursionId } = this.props.route.params;
-           
+
         return (
             <ScrollView>
-                <RenderExcursion 
+                <RenderExcursion
                     excursion={this.state.excursiones[+excursionId]}
                     favorita={this.state.favoritos.some(el => el === excursionId)}
                     onPress={() => this.marcarFavorito(excursionId)}
                 />
-                 <RenderComentario
+                <RenderComentario
                     comentarios={this.state.comentarios.filter((comentario) => comentario.excursionId === excursionId)}
-                 />
+                />
             </ScrollView>
 
         );
