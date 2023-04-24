@@ -11,10 +11,10 @@ const store = ConfigureStore();
 export default function App() {
   return(
     <Provider store={store}>
-    <View style={styles.container}>
-    <Campobase/>
-    <StatusBar style="auto" />
-    </View>
+      <View style={styles.container}>
+        <Campobase/>
+        <StatusBar style="auto" />
+      </View>
     </Provider>
    
   );
@@ -23,6 +23,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
   },
 });
