@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        actividades: state.actividades
+    actividades: state.actividades
     }
-}
+}   
 
 function Historia() {
 

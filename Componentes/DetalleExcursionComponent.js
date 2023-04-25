@@ -45,7 +45,6 @@ function RenderExcursion(props) {
 }
 
 function RenderComentario(props) {
-
     const comentarios = props.comentarios;
 
 
@@ -65,8 +64,8 @@ function RenderComentario(props) {
             </SafeAreaView>
         </Card>
     );
-}
 
+}
 class DetalleExcursion extends Component {
     constructor(props) {
         super(props);
@@ -111,4 +110,8 @@ const styles = StyleSheet.create({
 
 });
 
+<<<<<<< HEAD
 export default connect(mapStateToProps)(DetalleExcursion);
+=======
+export default connect(mapStateToProps)(DetalleExcursion);
+>>>>>>> 9729daed9cc0df6d4ba9b5233283867dfe7ccc6f

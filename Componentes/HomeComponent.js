@@ -4,11 +4,20 @@ import { Card } from '@rneui/themed';
 import { baseUrl } from '../comun/comun';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD
 const mapStateToProps = state => {
     return {
         excursiones: state.excursiones,
         cabeceras: state.cabeceras,
         actividades: state.actividades
+=======
+
+const mapStateToProps = state => {
+    return {
+        actividades: state.actividades,
+        excursiones: state.excursiones,
+        cabeceras: state.cabeceras
+>>>>>>> 9729daed9cc0df6d4ba9b5233283867dfe7ccc6f
     }
 }
 
@@ -60,4 +69,8 @@ const styles = StyleSheet.create({
 
 });
 
+<<<<<<< HEAD
 export default connect(mapStateToProps)(Home);
+=======
+export default connect(mapStateToProps)(Home);
+>>>>>>> 9729daed9cc0df6d4ba9b5233283867dfe7ccc6f

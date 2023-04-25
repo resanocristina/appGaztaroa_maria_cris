@@ -7,14 +7,16 @@ import { ConfigureStore } from './redux/configureStore';
 
 const store = ConfigureStore();
 
+
 export default function App() {
-  return (
+  return(
     <Provider store={store}>
       <View style={styles.container}>
-        <Campobase />
+        <Campobase/>
         <StatusBar style="auto" />
       </View>
     </Provider>
+   
   );
 }
 
