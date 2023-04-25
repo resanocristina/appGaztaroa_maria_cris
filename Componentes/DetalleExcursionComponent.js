@@ -74,8 +74,7 @@ class DetalleExcursion extends Component {
 
     marcarFavorito(excursionId) {
         this.setState({
-            favoritos: this.state.favoritos.concat(excursionId
-            )
+            favoritos: this.state.favoritos.concat(excursionId)
         });
     }
 

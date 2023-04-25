@@ -52,7 +52,7 @@ function CustomDrawerContent(props) {
   );
 }
 
-function CalendarioNavegador() {
+function CalendarioNavegador({navigation}) {
 
   return (
     <Stack.Navigator
@@ -62,6 +62,8 @@ function CalendarioNavegador() {
         headerTintColor: '#fff',
         headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />)
+
       }}
     >
       <Stack.Screen
@@ -82,7 +84,7 @@ function CalendarioNavegador() {
   );
 }
 
-function HomeNavegador() {
+function HomeNavegador({navigation}) {
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -91,6 +93,8 @@ function HomeNavegador() {
         headerTintColor: '#fff',
         headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />)
+
       }}
     >
       <Stack.Screen
@@ -104,7 +108,7 @@ function HomeNavegador() {
   );
 }
 
-function ContactoNavegador() {
+function ContactoNavegador({navigation}) {
   return (
     <Stack.Navigator
       initialRouteName="Contactanos"
@@ -113,6 +117,7 @@ function ContactoNavegador() {
         headerTintColor: '#fff',
         headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />)
       }}
     >
       <Stack.Screen
@@ -126,7 +131,7 @@ function ContactoNavegador() {
   );
 }
 
-function QuienesSomosNavegador() {
+function QuienesSomosNavegador({navigation}) {
   return (
     <Stack.Navigator
       initialRouteName="QuienesSomos"

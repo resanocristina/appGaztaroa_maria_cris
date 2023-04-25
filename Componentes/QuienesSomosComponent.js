@@ -28,8 +28,6 @@ function Historia() {
 
 class QuienesSomos extends Component {
 
-
-
     render() {
         const renderQuienesSomosItem = ({ item, index }) => {
 
