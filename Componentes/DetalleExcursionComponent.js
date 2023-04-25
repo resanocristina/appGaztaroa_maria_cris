@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { ScrollView, FlatList} from 'react-native';
+import { ScrollView, SafeAreaView} from 'react-native';
 import { Card } from '@rneui/themed';
 import { Icon } from '@rneui/themed';
 import { baseUrl } from '../comun/comun';
@@ -45,9 +45,8 @@ function RenderExcursion(props) {
 }
 
 function RenderComentario(props) {
-    const comentarios = this.props.comentarios.comentarios
+    const comentarios = props.comentarios;
 
-    const renderCommentarioItem = ({ item, index }) => {
 
     return (
         <Card>
@@ -65,8 +64,8 @@ function RenderComentario(props) {
             </SafeAreaView>
         </Card>
     );
-}
 
+}
 class DetalleExcursion extends Component {
     constructor(props) {
         super(props);
@@ -110,5 +109,5 @@ const styles = StyleSheet.create({
     },
 
 });
-}
+
 export default connect(mapStateToProps)(DetalleExcursion);
