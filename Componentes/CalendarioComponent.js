@@ -4,10 +4,6 @@ import { SafeAreaView, FlatList } from 'react-native';
 import { baseUrl } from '../comun/comun';
 import { connect } from 'react-redux';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9729daed9cc0df6d4ba9b5233283867dfe7ccc6f
 const mapStateToProps = state => {
     return {
         excursiones: state.excursiones
