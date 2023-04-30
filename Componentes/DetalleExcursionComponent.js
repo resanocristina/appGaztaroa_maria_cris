@@ -87,7 +87,7 @@ class DetalleExcursion extends Component {
         return (
             <ScrollView>
                 <RenderExcursion
-                    excursion={this.props.excursiones.excursiones[excursionId]}
+                    excursion={this.props.excursiones.excursiones[+excursionId]}
                     favorita={this.state.favoritos.some(el => el === excursionId)}
                     onPress={() => this.marcarFavorito(excursionId)}
                 />
