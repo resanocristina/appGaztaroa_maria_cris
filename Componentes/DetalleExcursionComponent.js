@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, Modal, Button } from 'react-native';
 import { ScrollView, SafeAreaView} from 'react-native';
 import { Card } from '@rneui/themed';
-import { Icon } from '@rneui/themed';
+import { Icon, Input} from '@rneui/themed';
 import { baseUrl } from '../comun/comun';
 import { connect } from 'react-redux';
-import {postFavorito} from '../redux/ActionCreators';
+import {postFavorito, postComentario } from '../redux/ActionCreators';
+import { colorGaztaroaOscuro } from '../comun/comun';
+import { Rating } from 'react-native-ratings';
 
 const mapStateToProps = state => {
     return {
@@ -16,7 +18,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    postFavorito: (excursionId) => dispatch(postFavorito(excursionId))
+    postFavorito: (excursionId) => dispatch(postFavorito(excursionId)),
+    postComentario: (excursionId, valoracion, autor, comentario) => dispatch(postComentario(excursionId, valoracion, autor, comentario))
 })
 
 
@@ -34,6 +37,7 @@ function RenderExcursion(props) {
                 <Text style={{ margin: 20 }}>
                     {excursion.descripcion}
                 </Text>
+                <View  style={{ flexDirection: 'row', justifyContent: 'left' }}>
                 <Icon
                     raised
                     reverse
@@ -42,6 +46,15 @@ function RenderExcursion(props) {
                     color='#f50'
                     onPress={() => props.favorita ? console.log('La excursión ya se encuentra entre las favoritas') : props.onPress()}>
                 </Icon>
+                <Icon
+                    raised
+                    reverse
+                    name='pencil' 
+                    type='font-awesome'
+                    color={colorGaztaroaOscuro}
+                    onPress={() => props.onPressComentario()}>
+                </Icon>
+                </View>
             </Card>
         );
     }
@@ -75,10 +88,47 @@ function RenderComentario(props) {
 }
 class DetalleExcursion extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            valoracion: 3,
+            autor: [],
+            comentario: [],
+            showModal: false
+        }
+    }
+
+    toggleModal() {
+        this.setState({ showModal: !this.state.showModal });
+    }
+
+    resetForm() {
+        this.setState({
+            valoracion: 3,
+            autor: '',
+            comentario: '',
+            dia: '',
+            showModal: false
+        });
+    }
+
+    gestionarComentario(excursionId) {
+        console.log(this.state);
+        this.props.postComentario(excursionId, this.state.valoracion, this.state.autor, this.state.comentario);
+        this.resetForm();
+    }
+
     marcarFavorito(excursionId) {
         this.props.postFavorito(excursionId);
     }
 
+    onPressComentario() {
+        this.setState({
+            showModal: !this.state.showModal
+        });
+      }
+    
     render() {
         const { excursionId } = this.props.route.params;
 
@@ -88,10 +138,62 @@ class DetalleExcursion extends Component {
                     excursion={this.props.excursiones.excursiones[+excursionId]}
                     favorita={this.props.favoritos.favoritos.some(el => el === excursionId)}
                     onPress={() => this.marcarFavorito(excursionId)}
+                    onPressComentario={() => this.toggleModal()}
                 />
                 <RenderComentario
                     comentarios={this.props.comentarios.comentarios.filter((comentario) => comentario.excursionId === excursionId)}
                 />
+                                <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.showModal}
+                    onDismiss={() => { this.toggleModal(); this.resetForm(); }}
+                    onRequestClose={() => { this.toggleModal(); this.resetForm(); }}>
+                    <View style={styles.modal}>
+
+                        <Rating
+                            showRating
+                            onFinishRating={value => this.setState({ puntuacion: value })}
+                            style={{ paddingVertical: 40 }}
+                            defaultRating={3}
+                        />
+                        <Input
+                            placeholder=' Autor'
+                            onChangeText={value => this.setState({ autor: value })}
+                            leftIcon={
+                                <Icon
+                                    name='user-o'
+                                    type='font-awesome'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                        />
+                        <Input
+                            placeholder=' Comentario'
+                            onChangeText={value => this.setState({ comentario: value })}
+                            leftIcon={
+                                <Icon
+                                    name='comment-o'
+                                    type='font-awesome'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                        />
+                        <Button style={styles.formRow}
+                            onPress={() => { this.gestionarComentario(excursionId) }}
+                            title="ENVIAR"
+                            color={colorGaztaroaOscuro}
+                            accessibilityLabel=""
+                        />
+                        <Button style={styles.formRow}
+                            onPress={() => { this.toggleModal(); this.resetForm(); }}
+                            color={colorGaztaroaOscuro}
+                            title="CANCELAR"
+                        />
+                    </View>
+                </Modal>
             </ScrollView>
 
         );
